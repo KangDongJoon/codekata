@@ -1,21 +1,35 @@
 class Solution {
     public String solution(int[] food) {
-        String answer = "";
-        for(int i = 1; i < food.length; i++){
-            for(int j = 0; j < food[i] / 2; j++){
-                answer += i;
-            }
-        }
-        
-        answer += 0;
-        
-        for(int i = food.length - 1; i >= 1; i--){
-            for(int j = 0; j < food[i] / 2; j++){
-                answer += i;
-            }
-        }
-        
-        
+        int length = 0;
+		for(int n : food) {
+			length += n / 2;
+		}
+		length = length * 2 + 1;
+		String[] arr = new String[length];
+		int l = 0;
+		int r = length - 1;
+		int i = 1;
+		int j = 0;
+		while(length / 2 > l) {
+			if(food[i] < 2) {
+				i++;
+			}else {
+				arr[l] = Integer.toString(i); 
+				arr[r] = Integer.toString(i);
+				j++;
+				l++;
+				r--;
+				if(j >= food[i] / 2) {
+					j = 0;
+					i++;
+				}
+			}
+		}
+		arr[length / 2] = "0";
+		String answer = "";
+		for(String s : arr) {
+			answer += s;
+		}
         return answer;
     }
 }
