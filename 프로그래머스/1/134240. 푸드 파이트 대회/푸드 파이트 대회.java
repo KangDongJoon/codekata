@@ -25,11 +25,11 @@ class Solution {
 				}
 			}
 		}
+        StringBuilder answer = new StringBuilder();
 		arr[length / 2] = "0";
-		String answer = "";
 		for(String s : arr) {
-			answer += s;
+			answer.append(s);
 		}
-        return answer;
+        return answer.toString();
     }
 }
