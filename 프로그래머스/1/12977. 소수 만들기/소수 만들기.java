@@ -1,37 +1,28 @@
+import java.util.Arrays;
+
 class Solution {
+
+
+
     public int solution(int[] nums) {
-        int answer = 0;
-        int sum = 0;
+        int ans = 0;
 
-        for (int i = 0; i < nums.length - 2; i++) {
-            int l = i + 1;
-            int r = nums.length - 1;
-
-            while (l < r) {
-                    sum = nums[i] + nums[l] + nums[r];
-                    answer += prime(sum);
-                    l++;
-                    if(l >= r){
-                        r--;
-                        l = i + 1;
-                    }
+        for(int i = 0; i < nums.length - 2; i ++){
+            for(int j = i + 1; j < nums.length - 1; j ++){
+                for(int k = j + 1; k < nums.length; k ++ ){
+                    if(isPrime(nums[i] + nums[j] + nums[k])){
+                        ans += 1;  
+                    } 
                 }
             }
-        return answer;
         }
-
-    public static int prime(int sum) {
-        int count = 0;
-        int sqrt = (int) Math.sqrt(sum);
-        for (int i = 1; i <= Math.sqrt(sum); i++) {
-            if (sum % i == 0) {
-                count++;
-            }
+        return ans;
+    }
+    public Boolean isPrime(int num){
+        int cnt = 0;
+        for(int i = 1; i <= (int)Math.sqrt(num); i ++){
+            if(num % i == 0) cnt += 1; 
         }
-        if (count > 1) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return cnt == 1;
     }
 }
