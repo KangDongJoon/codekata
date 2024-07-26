@@ -1,32 +1,23 @@
 class Solution {
     public int solution(int number, int limit, int power) {
-        int[] factors = new int[number];
-        factors[0] = 1;
+        int[] factors = new int[number + 1];
         int answer = 0;
 
-        for(int i = 2; i <= number; i++){
-            int m = 0;
-            int sqrt = (int) Math.sqrt(i);
-            for(int j = 2; j <= sqrt; j++){
-                if(i % j == 0){
-                    m++;
-                }
+        // 에라토스테네스의 체 변형을 사용하여 약수의 개수 계산
+        for (int i = 1; i <= number; i++) {
+            for (int j = i; j <= number; j += i) {
+                factors[j]++;
             }
-            if(sqrt * sqrt == i){
-                m = m * 2 + 1;
-            }else{
-                m = m * 2 + 2;
-            }
+        }
 
-            if(m <= limit){
-                factors[i - 1] = m;
-            }else{
-                factors[i - 1] = power;
+        // 제한 및 파워 적용
+        for (int i = 1; i <= number; i++) {
+            if (factors[i] > limit) {
+                factors[i] = power;
             }
+            answer += factors[i];
         }
-        for(int a : factors){
-            answer += a;
-        }
+
         return answer;
     }
 }
