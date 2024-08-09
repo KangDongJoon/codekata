@@ -26,10 +26,6 @@ class Solution {
         }
         answer[2] = y2 + 1;
         
-        if(cnt == 1){
-            answer[2] = answer[0] + 1;
-            answer[3] = answer[1] + 1;
-        }
         return answer;
     }
 }
