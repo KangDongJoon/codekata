@@ -6,8 +6,7 @@ class Solution {
         int i = 0;
         while (!s.equals("1")){
             s = s.replaceAll("0","");
-            int zeroRemove = n - s.length();
-            remove += zeroRemove;
+            remove += n - s.length();
             s = toBinary(s.length());
             n = s.length();
             i++;
@@ -27,9 +26,7 @@ class Solution {
             }
             n /= 2;
         }
-        if(n == 1){
-            sb.append(1);
-         }
+        sb.append(1);
         return sb.reverse().toString();
     }
 }
