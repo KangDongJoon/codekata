@@ -2,34 +2,30 @@ import java.util.*;
 
 class Solution {
     public int solution(int k, int[] tangerine) {
+        // 귤 크기별 빈도를 저장하는 HashMap
         Map<Integer, Integer> map = new HashMap<>();
 
+        // tangerine 배열의 값들을 순회하며 빈도 계산
         for (int i : tangerine) {
-            if(!map.containsKey(i)){
-                map.put(i, 1);
-            }else{
-                map.put(i, map.get(i) + 1);
-            }
+            map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        List<Map.Entry<Integer, Integer>> entryList 
-            = new ArrayList<>(map.entrySet());
+        // 빈도수만 저장하는 리스트 생성
+        List<Integer> frequencyList = new ArrayList<>(map.values());
 
-        entryList.sort(Map.Entry.comparingByValue());
+        // 빈도수 내림차순 정렬
+        frequencyList.sort(Collections.reverseOrder());
 
-        int i = entryList.toArray().length - 1;
-        int n = 0;
-        
-        while(k > 0){
-            int a = entryList.get(i).getValue();
-            k -= a;
+        int n = 0; // 최소 귤 크기 수
+        for (int freq : frequencyList) {
+            k -= freq;
             n++;
-            if(i != 0){
-                i--;     
-            }else{
+            // k가 0 이하가 되면 필요한 귤의 수를 충족하였으므로 종료
+            if (k <= 0) {
                 break;
             }
         }
+
         return n;
     }
 }
