@@ -7,8 +7,6 @@ public class Main {
     public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    //6 0
-    //1 1 9 1 1 1
     public static void main(String[] args) throws IOException {
 
         int n = Integer.parseInt(br.readLine());
@@ -32,7 +30,7 @@ public class Main {
     static int avg(int[] arr) {
         double sum = 0;
 
-        for (Integer n : arr) {
+        for (int n : arr) {
             sum += n;
         }
 
@@ -86,13 +84,15 @@ public class Main {
     }
 
     // 범위
-    static int range(int[] arr){
-        Arrays.sort(arr);
+    static int range(int[] arr) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
 
-        if(arr.length == 1){
-            return 0;
+        for (int n : arr) {
+            if (n < min) min = n;
+            if (n > max) max = n;
         }
 
-        return arr[arr.length - 1] - arr[0];
+        return max - min;
     }
 }
