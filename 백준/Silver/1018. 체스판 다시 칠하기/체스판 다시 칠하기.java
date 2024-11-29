@@ -27,18 +27,10 @@ public class Main {
                     sb.append(arr[j + line], i, i + 8);
                     line++;
                 }
-                if (sb.charAt(0) == 'B') {
-                    int count1 = startB(sb);
-                    int count2 = startW(sb);
-                    if (min > Math.min(count1, count2)) {
-                        min = Math.min(count1, count2);
-                    }
-                } else {
-                    int count1 = startB(sb);
-                    int count2 = startW(sb);
-                    if (min > Math.min(count1, count2)) {
-                        min = Math.min(count1, count2);
-                    }
+                int count1 = startB(sb);
+                int count2 = startW(sb);
+                if (min > Math.min(count1, count2)) {
+                    min = Math.min(count1, count2);
                 }
             }
         }
