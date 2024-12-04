@@ -19,9 +19,8 @@ public class Main {
 
         while (queue.size() > 1){
             queue.remove();
-            int second = queue.peek();
+            queue.add(queue.peek());
             queue.remove();
-            queue.add(second);
         }
 
         System.out.println(queue.peek());
