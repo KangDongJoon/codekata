@@ -2,7 +2,6 @@ import java.io.*;
 
 public class Main {
     public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) throws IOException {
 
@@ -14,15 +13,14 @@ public class Main {
         // N! / K!(N-K)!
 
         if((N == K) || (K == 0)){
-            bw.write("1");
-            bw.flush();
+            System.out.println("1");
             return;
         }
 
         int answer = factorial(N) / (factorial(K) * factorial(R));
+        
+        System.out.println(answer);
 
-        bw.write(Integer.toString(answer));
-        bw.flush();
     }
 
     static int factorial(int a){
