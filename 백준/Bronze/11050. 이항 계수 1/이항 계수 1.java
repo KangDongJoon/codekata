@@ -13,14 +13,20 @@ public class Main {
         int R = N - K;
         // N! / K!(N-K)!
 
+        if((N == K) || (K == 0)){
+            bw.write("1");
+            bw.flush();
+            return;
+        }
+
         int answer = factorial(N) / (factorial(K) * factorial(R));
 
-        System.out.println(answer);
-
+        bw.write(Integer.toString(answer));
+        bw.flush();
     }
 
     static int factorial(int a){
-        
+
         int fac = 1;
         for(int i = 2; i <= a; i++){
             fac *= i;
