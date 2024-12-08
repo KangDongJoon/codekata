@@ -15,30 +15,29 @@ public class Main {
         int K = Integer.parseInt(reads[1]);
 
         LinkedList<Integer> linkedList = new LinkedList<>();
-        List<Integer> list = new ArrayList<>();
 
         for (int i = 1; i <= N; i++) {
             linkedList.add(i);
         }
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+
         int index = 0;
         int start = 0;
         while (!linkedList.isEmpty()) {
             index = (start + K - 1) % linkedList.size();
-            list.add(linkedList.get(index));
+            sb.append(linkedList.get(index));
             linkedList.remove(index);
+            if(!linkedList.isEmpty()){
+                sb.append(", ");
+            }
             start = index;
         }
 
-        StringBuilder sb = new StringBuilder();
+        sb.append(">");
 
-        sb.append("<");
-        for (Integer s : list) {
-            sb.append(s).append(", ");
-        }
-        String answer = sb.toString().substring(0, sb.length() - 2) + ">";
-        
-        bw.write(answer);
+        bw.write(sb.toString());
         bw.flush();
     }
 }
