@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -9,26 +7,33 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         String[] input = br.readLine().split(" ");
-
         int M = Integer.parseInt(input[0]);
         int N = Integer.parseInt(input[1]);
 
-        List<Integer> list = new ArrayList<>();
+        boolean[] isPrime = new boolean[N + 1];
 
-        for (int i = 1; i <= N; i++) {
-            list.add(i);
+        // 0과 1은 소수가 아님
+        isPrime[0] = false;
+        isPrime[1] = false;
+
+        // 처음에는 모든 수를 소수로 가정
+        for (int i = 2; i <= N; i++) {
+            isPrime[i] = true;
         }
 
-        for (int j = 2; j < N; j++) {
-            for (int k = 2; j * k <= N; k++) {
-                list.set(j * k - 1, 0);
+        // 에라토스테네스의 체 구현
+        for (int i = 2; i * i <= N; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= N; j += i) {
+                    isPrime[j] = false;
+                }
             }
         }
 
-        for (Integer n : list) {
-            if (n != 0 && n != 1 && n >= M) {
-                bw.write(Integer.toString(n));
-                bw.newLine();
+        // 결과 출력
+        for (int i = M; i <= N; i++) {
+            if (isPrime[i]) {
+                bw.write(i + "\n");
             }
         }
         bw.flush();
