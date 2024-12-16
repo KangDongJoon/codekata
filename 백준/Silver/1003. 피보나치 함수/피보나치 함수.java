@@ -1,25 +1,30 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
+    public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static int[][] arr;
 
-        for(int i = 0; i < T; i++){
-            int N = Integer.parseInt(br.readLine());
-            int[] fibonacci0 = new int[41];
-            int[] fibonacci1 = new int[41];
-            fibonacci0[0] = 1;
-            fibonacci0[1] = 0;
-            fibonacci1[0] = 0;
-            fibonacci1[1] = 1;
-            for(int k = 2; k <= N; k++){
-                fibonacci0[k] = fibonacci0[k-1] + fibonacci0[k-2];
-                fibonacci1[k] = fibonacci1[k-1] + fibonacci1[k-2];
-            }
-            System.out.println(fibonacci0[N] + " " + fibonacci1[N]);
+    public static void main(String[] args) throws IOException {
+        int n = Integer.parseInt(br.readLine());
+
+        arr = new int[41][2];
+        arr[0][0] = 1;
+        arr[1][0] = 0;
+        arr[0][1] = 0;
+        arr[1][1] = 1;
+
+        for(int j = 2; j < 41; j++){
+            arr[j][0] = arr[j - 1][0] + arr[j - 2][0];
+            arr[j][1] = arr[j - 1][1] + arr[j - 2][1];
         }
+        for (int i = 0; i < n; i++) {
+            int a = Integer.parseInt(br.readLine());
+            StringBuilder sb = new StringBuilder();
+            sb.append(arr[a][0]).append(" ").append(arr[a][1]);
+            bw.write(sb.toString());
+            bw.newLine();
+        }
+        bw.flush();
     }
 }
