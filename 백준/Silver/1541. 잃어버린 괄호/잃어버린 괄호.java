@@ -1,34 +1,37 @@
-import java.util.Scanner;
- 
+import java.io.*;
+
 public class Main {
- 
-	public static void main(String[] args) {
- 
-		Scanner in = new Scanner(System.in);
- 
-		int sum = Integer.MAX_VALUE;	// 초기 상태 여부 확인을 위한 값으로 설정 
-		String[] subtraction = in.nextLine().split("-");
-		
- 
-		for(int i = 0; i < subtraction.length; i++) {
-			int temp = 0;
- 
-			// 뺄셈으로 나뉜 토큰을 덧셈으로 분리하여 해당 토큰들을 더한다.
-			String[] addition = subtraction[i].split("\\+");
-			
-			// 덧셈으로 나뉜 토큰들을 모두 더한다. 
-			for(int j = 0; j < addition.length; j++) {
-				temp += Integer.parseInt(addition[j]);
-			}
-			
-			// 첫 번째토큰인 경우 temp값이 첫 번째 수가 됨
-			if (sum == Integer.MAX_VALUE) {
-				sum = temp;
-			} else {
-				sum -= temp;
-			}
-		}
-		System.out.println(sum);
-	}
- 
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+
+        String input = br.readLine();
+        StringBuilder sb = new StringBuilder();
+        int answer = 0;
+        char now = input.charAt(0) != '-' ? '+' : '-';
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == '+' || c == '-') {
+                if (now == '+') {
+                    answer += Integer.parseInt(sb.toString());
+                    now = c;
+                } else {
+                    answer -= Integer.parseInt(sb.toString());
+                }
+                sb = new StringBuilder();
+            } else {
+                sb.append(c);
+            }
+        }
+
+        if (now == '+') {
+            answer += Integer.parseInt(sb.toString());
+        } else {
+            answer -= Integer.parseInt(sb.toString());
+        }
+
+        System.out.println(answer);
+    }
 }
