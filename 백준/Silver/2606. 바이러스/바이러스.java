@@ -22,7 +22,7 @@ public class Main {
         visited = new boolean[N + 1];
 
         // 그래프 생성
-        for(int i = 0; i < M; i++){
+        for (int i = 0; i < M; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
@@ -30,23 +30,35 @@ public class Main {
             graph[a][b] = graph[b][a] = 1;
         }
 
-        BFS();
-        
+//        BFS();
+        DFS(1);
+
         System.out.println(answer);
 
     }
 
-    static void BFS(){
+    static void DFS(int now) {
+        visited[now] = true;
+
+        for(int next = 1; next <= N; next++){
+            if (graph[now][next] != 0 && !visited[next]) {
+                answer++;
+                DFS(next);
+            }
+        }
+    }
+
+    static void BFS() {
         Queue<Integer> queue = new LinkedList<>();
         queue.add(1);
         visited[1] = true;
 
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int now = queue.poll();
 
-            for(int next = 1; next <= N; next++){
+            for (int next = 1; next <= N; next++) {
 
-                if (graph[now][next] != 0 && !visited[next]){
+                if (graph[now][next] != 0 && !visited[next]) {
                     queue.add(next);
                     visited[next] = true;
                     answer++;
