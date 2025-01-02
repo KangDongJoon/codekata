@@ -39,59 +39,53 @@ public class Main {
 
         Collections.sort(list);
 
-        bw.write(Integer.toString(total));
-        bw.newLine();
+        StringBuilder answer = new StringBuilder();
+        answer.append(total).append("\n");
+        
 
         for (Integer integer : list) {
-            bw.write(Integer.toString(integer));
-            bw.newLine();
+            answer.append(integer).append("\n");
         }
 
+        bw.write(answer.toString());
         bw.flush();
 
     }
 
     static void divide(int x, int y) {
         total++; // 함수 실행 시 토탈 카운트 증가
-        
+
         // 큐 생성
         Queue<int[]> queue = new LinkedList<>();
         int[] arr = {x, y};
         // 첫번째 값 추가 및 방문처리
         queue.add(arr);
         visit[x][y] = true;
-        
+
         int count = 1; // 아파트 단지 내 세대 수 카운팅
 
         while (!queue.isEmpty()) {
+
             int[] now = queue.poll();
 
             for (int i = 0; i < 4; i++) {
                 int nextX = now[0] + dx[i];
                 int nextY = now[1] + dy[i];
 
-                if (nextX >= 0 && nextX < N && !visit[nextX][now[1]]) {
-                    if (apart[nextX][now[1]] == 1) {
-                        visit[nextX][now[1]] = true;
-                        int[] nextXarr = {nextX, now[1]};
-                        queue.add(nextXarr);
-                        count++;
-                        continue;
-                    }
-
+                if(nextX < 0 || nextX >= N || nextY < 0 || nextY >= N){
+                    continue;
                 }
 
-                if (nextY >= 0 && nextY < N && !visit[now[0]][nextY]) {
-                    if (apart[now[0]][nextY] == 1) {
-                        visit[now[0]][nextY] = true;
-                        int[] nextYarr = {now[0], nextY};
-                        queue.add(nextYarr);
-                        count++;
-                    }
+                if(apart[nextX][nextY] == 1 && !visit[nextX][nextY]){
+                    visit[nextX][nextY] = true;
+                    int[] nextArr = {nextX, nextY};
+                    queue.add(nextArr);
+                    count++;
                 }
             }
         }
 
+        // 카운트 리스트에 추가
         list.add(count);
     }
 }
