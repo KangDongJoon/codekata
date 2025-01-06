@@ -10,60 +10,28 @@ public class Main {
     static int count;
 
     public static void main(String[] args) throws IOException {
-
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
         S = br.readLine();
 
+        int i = 0;
         count = 0;
+        int patternCount = 0;
 
-        StringBuilder target = new StringBuilder();
-
-        target.append("I");
-        for (int i = 0; i < N; i++) {
-            target.append("OI");
-        }
-
-
-
-        int j = 0;
-        while (j < M) {
-            char first = S.charAt(j);
-
-            if (first == 'I') {
-                StringBuilder sb = new StringBuilder();
-                sb.append(first);
-                flag = false;
-
-                for (int i = j + 1; i < M; i++) {
-                    char next = S.charAt(i);
-
-                    if (!flag) {
-                        if (next == 'O') {
-                            sb.append(next);
-                            flag = !flag;
-                        } else {
-                            break;
-                        }
-                    } else {
-                        if (next == 'I') {
-                            sb.append(next);
-                            flag = !flag;
-                        } else{
-                            break;
-                        }
-                    }
-
-                    if(sb.toString().equals(target.toString())){
-                        count++;
-                        break;
-                    }
+        while (i < M - 1) {
+            if (S.charAt(i) == 'I' && S.charAt(i + 1) == 'O' && i + 2 < M && S.charAt(i + 2) == 'I') {
+                patternCount++;
+                if (patternCount == N) {
+                    count++;
+                    patternCount--;  // 윈도우를 슬라이드하기 위해 앞의 한 패턴을 제거
                 }
+                i += 2;  // `OI`가 끝난 후 `I`에서 다시 시작
+            } else {
+                patternCount = 0;
+                i++;
             }
-
-            j++;
-
         }
         System.out.println(count);
     }
+
 }
