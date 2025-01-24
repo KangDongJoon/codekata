@@ -16,20 +16,13 @@ public class Main {
 
     static int[] dx = {0, 0, -1, 1};
     static int[] dy = {-1, 1, 0, 0};
+    static int[] start;
 
     public static void main(String[] args) throws IOException {
 
         input();
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                String now = campus[i][j];
-                if (now.equals("I")) {
-                    BFS(i, j);
-                    break;
-                }
-            }
-        }
+        BFS(start[0], start[1]);
 
         if (count == 0) {
             bw.write("TT");
@@ -53,6 +46,9 @@ public class Main {
             String read = br.readLine();
             for (int j = 0; j < M; j++) {
                 campus[i][j] = String.valueOf(read.charAt(j));
+                if(campus[i][j].equals("I")){
+                    start = new int[] {i, j};
+                }
             }
         }
     }
