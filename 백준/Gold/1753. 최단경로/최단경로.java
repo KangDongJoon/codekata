@@ -6,82 +6,90 @@ public class Main {
     static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     static StringTokenizer st;
 
-    static int V, E, start;
+    static int V, E, K;
     static List<Node>[] graph;
-    static int[] distance;
+    static int[] dist;
+    static boolean[] visit;
 
     public static void main(String[] args) throws IOException {
-        var();
-        graph();
-        dijkstra(start);
+        input();
+        dijkstra(K);
 
-        for (int i = 1; i < distance.length; i++) {
-            int n = distance[i];
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i < V + 1; i++) {
+            int n = dist[i];
             if (n == Integer.MAX_VALUE) {
-                System.out.println("INF");
-            } else
-                System.out.println(n);
+                sb.append("INF").append("\n");
+            } else {
+                sb.append(n).append("\n");
+            }
         }
+
+        System.out.println(sb);
     }
 
-    static void var() throws IOException {
+    static void input() throws IOException {
         st = new StringTokenizer(br.readLine());
 
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
-        start = Integer.parseInt(br.readLine());
-    }
+        K = Integer.parseInt(br.readLine());
 
-    static void graph() throws IOException {
+        dist = new int[V + 1];
+        visit = new boolean[V + 1];
         graph = new ArrayList[V + 1];
-        distance = new int[V + 1];
-        for (int i = 1; i <= V; i++) {
+
+        for (int i = 0; i < V + 1; i++) {
             graph[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < E; i++) {
+        for (int j = 0; j < E; j++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
-            int d = Integer.parseInt(st.nextToken());
-            graph[s].add(new Node(e, d));
-        }
-    }
+            int next = Integer.parseInt(st.nextToken());
+            int dist = Integer.parseInt(st.nextToken());
 
-    static class Node {
-
-        private int p;
-        private int d;
-
-        public Node(int p, int d) {
-            this.p = p;
-            this.d = d;
+            graph[s].add(new Node(next, dist));
         }
     }
 
     static void dijkstra(int start) {
-        Arrays.fill(distance, Integer.MAX_VALUE);
-        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparing(node -> node.d));
-        distance[start] = 0;
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.dist - o2.dist);
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[start] = 0;
         pq.add(new Node(start, 0));
 
         while (!pq.isEmpty()) {
-            Node now = pq.poll();
-            int nowIndex = now.p;
-            int dist = now.d;
-            if (distance[nowIndex] < dist) continue;
+            Node nowNode = pq.poll();
+            int now = nowNode.next;
+            int nowDist = nowNode.dist;
 
-            for (int i = 0; i < graph[nowIndex].size(); i++) {
-                Node next = graph[nowIndex].get(i);
-                int nextIndex = next.p;
-                int nextDist = next.d;
+            if (visit[now]) continue;
 
-                if (distance[nextIndex] > distance[nowIndex] + nextDist) {
-                    distance[nextIndex] = distance[nowIndex] + nextDist;
-                    pq.add(new Node(nextIndex, distance[nextIndex]));
+            visit[now] = true;
+            for (Node node : graph[now]) {
+                int next = node.next;
+                int nextDist = node.dist;
 
+                if (dist[now] + nextDist < dist[next]) {
+                    dist[next] = dist[now] + nextDist;
+                    pq.add(new Node(next, dist[next]));
                 }
             }
         }
+
+
     }
+
+    static class Node {
+        int next;
+        int dist;
+
+        public Node(int next, int dist) {
+            this.next = next;
+            this.dist = dist;
+        }
+    }
+
 }
