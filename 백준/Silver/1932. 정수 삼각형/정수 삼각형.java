@@ -40,6 +40,11 @@ public class Main {
             second[0] = answer.get(0)[0] + graph.get(1)[0];
             second[1] = answer.get(0)[0] + graph.get(1)[1];
             answer.add(second);
+            int ans = 0;
+
+            if (n == 2) {
+                ans = Math.max(second[0], second[1]);
+            }
 
             for (int i = 3; i <= n; i++) {
                 int[] arr = new int[i];
@@ -47,21 +52,17 @@ public class Main {
                 for (int j = 0; j < arr.length; j++) {
                     if (j == 0) {
                         arr[j] = graph.get(i - 1)[0] + answer.get(i - 2)[0];
+                        if (i == n) ans = Math.max(arr[j], ans);
                     } else if (j == arr.length - 1) {
                         arr[j] = graph.get(i - 1)[arr.length - 1] + answer.get(i - 2)[arr.length - 2];
+                        if (i == n) ans = Math.max(arr[j], ans);
                     } else {
                         int a = Math.max(answer.get(i - 2)[j], answer.get(i - 2)[j - 1]);
                         arr[j] = graph.get(i - 1)[j] + a;
+                        if (i == n) ans = Math.max(arr[j], ans);
                     }
                 }
                 answer.add(arr);
-            }
-
-            int ans = 0;
-            for (int i : answer.get(answer.size() - 1)) {
-                if (i > ans) {
-                    ans = i;
-                }
             }
 
             System.out.println(ans);
