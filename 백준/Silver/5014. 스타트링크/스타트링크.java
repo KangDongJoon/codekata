@@ -30,7 +30,6 @@ public class Main {
 
         visit = new boolean[F + 1];
         count = new int[F + 1];
-        Arrays.fill(count, Integer.MAX_VALUE);
 
         bw.write(BFS(S));
         bw.flush();
@@ -57,18 +56,14 @@ public class Main {
                 visit[up] = true;
                 q.add(up);
                 int upCount = count[cur] + 1;
-                if (upCount < count[up]) {
-                    count[up] = upCount;
-                }
+                count[up] = upCount;
             }
 
             if (down > 0 && !visit[down]) {
                 visit[down] = true;
                 q.add(down);
                 int downCount = count[cur] + 1;
-                if (downCount < count[down]) {
-                    count[down] = downCount;
-                }
+                count[down] = downCount;
             }
         }
 
