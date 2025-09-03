@@ -18,7 +18,7 @@ public class Main {
 
         int max = Integer.MIN_VALUE;
         for (int j = 0; j < N; j++) {
-            int nowMax = Math.max(arr[j] * (N - j), arr[j]);
+            int nowMax = arr[j] * (N - j);
             if (max < nowMax) {
                 max = nowMax;
             }
