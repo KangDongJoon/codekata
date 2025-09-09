@@ -12,28 +12,19 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        int[][] arr = new int[M][M];
 
         int packMin = Integer.MAX_VALUE;
         int oneMin = Integer.MAX_VALUE;
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int pack = Integer.parseInt(st.nextToken());
-            int one = Integer.parseInt(st.nextToken());
-
-            if (pack < packMin) {
-                packMin = pack;
-            }
-
-            if (one < oneMin) {
-                oneMin = one;
-            }
+            packMin = Math.min(packMin, Integer.parseInt(st.nextToken()));
+            oneMin = Math.min(oneMin, Integer.parseInt(st.nextToken()));
         }
 
-        int a = packMin * (N / 6) + oneMin * (N % 6);
-        int b = packMin * ((N / 6) + 1);
-        int c = oneMin * N;
-        int answer = Math.min(a, Math.min(b, c));
+        int answer = Math.min(
+                Math.min(packMin * (N / 6) + oneMin * (N % 6), packMin * ((N / 6) + 1)),
+                oneMin * N
+        );
 
 
         bw.write(Integer.toString(answer));
